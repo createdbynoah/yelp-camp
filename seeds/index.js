@@ -27,6 +27,7 @@ const seedDB = async () => {
       Eveniet animi repellendus voluptate. Soluta dolor, aperiam pariatur at ad rem neque sed facilis placeat beatae fugit fuga cumque consectetur qui deserunt tempora velit praesentium. Vel aperiam accusantium eius iste.`,
       price,
       image: 'https://source.unsplash.com/collection/483251',
+      author: '6439d4e37880c1a0d418de32',
     });
     await camp.save();
   }
