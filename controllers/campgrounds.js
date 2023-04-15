@@ -24,6 +24,12 @@ const newCampground = (req, res) => {
 
 const createCampground = async (req, res, next) => {
   const campground = new Campground(req.body.campground);
+  req.files.forEach((file) => {
+    campground.images.push({
+      url: file.path,
+      filename: file.filename,
+    });
+  });
   campground.author = req.user._id;
   await campground.save();
   console.log('new campground', campground);
