@@ -6,11 +6,20 @@
   <div class="card">
     <div class="row">
       <div class="col-md-4">
+        <% if(campground.images.length) { %>
         <img
           class="img-fluid"
           src="<%= campground.images[0].url %>"
           alt="<%= campground.title %>"
         />
+        <% } else { %>
+          <!-- No image found -->
+        <img
+          class="img-fluid"
+          src="https://upload.wikimedia.org/wikipedia/commons/thumb/d/d1/Image_not_available.png/640px-Image_not_available.png"
+          alt="Image not found"
+        />
+        <% } %>
       </div>
       <div class="col-md-8">
         <div class="card-body">

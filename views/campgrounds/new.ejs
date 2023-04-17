@@ -9,6 +9,7 @@
       class="validated-form"
       enctype="multipart/form-data"
     >
+      <!-- Title -->
       <div class="mb-3">
         <label class="form-label" for="title">Title</label>
         <input
@@ -21,6 +22,7 @@
         <div class="valid-feedback">Looks good!</div>
         <div class="invalid-feedback">Please enter a campground title.</div>
       </div>
+      <!-- Location -->
       <div class="mb-3">
         <label for="location">Location</label>
         <input
@@ -33,21 +35,18 @@
         <div class="valid-feedback">Looks good!</div>
         <div class="invalid-feedback">Please enter a valid location.</div>
       </div>
+      <!-- Images -->
       <div class="mb-3">
-        <input type="file" name="image" id="image" multiple />
-      </div>
-      <!-- <div class="mb-3">
-        <label for="image">Image URL</label>
+        <label for="image" class="form-label">Images</label>
         <input
           class="form-control"
-          type="text"
-          name="campground[image]"
+          type="file"
           id="image"
-          required
+          name="image"
+          multiple
         />
-        <div class="valid-feedback">Looks good!</div>
-        <div class="invalid-feedback">Please enter a valid image URL.</div>
-      </div> -->
+      </div>
+      <!-- Price -->
       <div class="mb-3">
         <label class="form-label" for="price">Campground Price</label>
 
@@ -66,6 +65,7 @@
           <div class="invalid-feedback">Please enter a valid price.</div>
         </div>
       </div>
+      <!-- Description -->
       <div>
         <label class="form-label" for="description">Description</label>
         <textarea
