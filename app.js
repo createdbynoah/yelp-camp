@@ -10,6 +10,7 @@ const session = require('express-session');
 const flash = require('connect-flash');
 const expressSanitize = require('express-mongo-sanitize');
 const helmet = require('helmet');
+const MongoStore = require('connect-mongo');
 
 const ExpressError = require('./utils/ExpressError');
 const methodOverride = require('method-override');
@@ -21,8 +22,15 @@ const campgroundRoutes = require('./routes/campgrounds');
 const reviewRoutes = require('./routes/reviews');
 const userRoutes = require('./routes/users');
 
+const dbUrl = process.env.DB_URL || 'mongodb://localhost:27017/yelp-camp';
+const secret = process.env.SECRET || 'thisshoudlbeabettersecret!';
+
+// process.env.DB_URL || 'mongodb://localhost:27017/yelp-camp';
+
+// 'mongodb://localhost:27017/yelp-camp'
+
 mongoose
-  .connect('mongodb://localhost:27017/yelp-camp')
+  .connect(dbUrl)
   .then(() => {
     console.log('MONGO CONNECTION OPEN');
   })
@@ -33,9 +41,22 @@ mongoose
 
 const app = express();
 
+const store = MongoStore.create({
+  mongoUrl: dbUrl,
+  touchAfter: 24 * 60 * 60,
+  crypto: {
+    secret,
+  },
+});
+
+store.on('error', function (e) {
+  console.log('SESSION STORE ERROR', e);
+});
+
 const sessionConfig = {
+  store,
   name: 'session',
-  secret: 'thisshouldbeabettersecret!',
+  secret,
   resave: false,
   saveUninitialized: true,
   cookie: {
@@ -136,6 +157,8 @@ app.use((err, req, res, next) => {
   res.status(statusCode).render('error', { err });
 });
 
-app.listen(3000, () => {
-  console.log('App is listening on port 3000');
+const port = process.env.PORT || 3000;
+
+app.listen(port, () => {
+  console.log(`App is listening on port ${port}`);
 });
