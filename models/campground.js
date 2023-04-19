@@ -50,10 +50,15 @@ const campgroundSchema = new Schema(
 );
 
 campgroundSchema.virtual('properties.popUpMarkup').get(function () {
-  return `
+  if (this.images.length === 0) {
+    return `
+  <strong><a href="/campgrounds/${this._id}">${this.title}</a></strong>`;
+  } else {
+    return `
   <img src="${this.images[0].thumbnail}" alt="${this.title}" /><br>
   <strong><a href="/campgrounds/${this._id}">${this.title}</a></strong>
   <p>${this.description.substring(0, 20)}...</p>`;
+  }
 });
 
 campgroundSchema.post('findOneAndDelete', async function (doc) {
